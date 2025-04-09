@@ -5,6 +5,7 @@ namespace PeeQL\Parser;
 use Exception;
 use PeeQL\Operations\QueryOperation;
 use PeeQL\Router\PeeQLRouter;
+use PeeQL\Schema\PeeQLSchema;
 
 /**
  * This class is responsible for parsing JSON to understandable sections for the rest of the component
@@ -12,9 +13,19 @@ use PeeQL\Router\PeeQLRouter;
  * @author Lukas Velek
  */
 class PeeQLParser {
+    /**
+     * Class constructor
+     */
     public function __construct() {}
 
-    public function parse(PeeQLRouter $router, string $json) {
+    /**
+     * Parses given json and returns the result of the handler
+     * 
+     * @param PeeQLRouter $router Router
+     * @param PeeQLSchema $schema Schema
+     * @param string $json JSON
+     */
+    public function parse(PeeQLRouter $router, PeeQLSchema $schema, string $json): mixed {
         $decodedJson = json_decode($json, true);
 
         if(!array_key_exists('operation', $decodedJson)) {
@@ -28,6 +39,11 @@ class PeeQLParser {
         } else {
             throw new Exception(sprintf('Operation of type \'%s\' is unknown.', $operation));
         }
+
+        $schemaName = ucfirst($operation->getName()) . 'Schema';
+
+        $_schema = $schema->getSchema($schemaName);
+        $operation = $_schema->validate($operation);
 
         $handler = $router->route($operation->getHandlerName());
         

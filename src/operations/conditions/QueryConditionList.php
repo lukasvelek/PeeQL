@@ -9,7 +9,7 @@ namespace PeeQL\Operations\Conditions;
  */
 class QueryConditionList {
     /**
-     * @var array<QueryCondition> $conditions
+     * @var array<int, QueryCondition> $conditions
      */
     private array $conditions;
 
@@ -29,6 +29,15 @@ class QueryConditionList {
      */
     public function addCondition(string $columName, string $value, string $type) {
         $this->conditions[] = new QueryCondition($columName, $value, $type);
+    }
+
+    /**
+     * Adds an instance of QueryCondition
+     * 
+     * @param QueryCondition $condition QueryCondition instance
+     */
+    public function addObjectCondition(QueryCondition $condition) {
+        $this->conditions[] = $condition;
     }
 
     /**

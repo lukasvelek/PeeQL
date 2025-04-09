@@ -105,14 +105,14 @@ abstract class AOperation {
     /**
      * Returns the handler name
      */
-    public function getHandlerName() {
+    public function getHandlerName(): string {
         return $this->handlerName;
     }
 
     /**
      * Returns the handler method name
      */
-    public function getHandlerMethodName() {
+    public function getHandlerMethodName(): string {
         return $this->handlerMethodName;
     }
 
@@ -128,6 +128,25 @@ abstract class AOperation {
      */
     public function getConditionsAsArray(): array {
         return $this->conditions->getConditions();
+    }
+
+    /**
+     * Returns the operation name
+     */
+    public function getName(): string {
+        return $this->name;
+    }
+
+    /**
+     * Creates a clone after validation
+     */
+    public static function cloneAfterValidation(QueryOperation $operation, array $columns, QueryConditionList $conditions) {
+        $obj = new static($operation->type, $operation->name);
+        $obj->setData($operation->parsedJson);
+        $obj->selectCols = $columns; 
+        $obj->conditions = $conditions;
+
+        return $obj;
     }
 }
 
