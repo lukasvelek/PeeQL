@@ -81,6 +81,8 @@ abstract class AOperation {
             for($i = 0; $i < count($parts); $i++) {
                 if(array_key_exists($parts[$i], $json)) {
                     $json = $json[$parts[$i]];
+                } else {
+                    break;
                 }
 
                 if(($i + 1) == count($parts)) {
