@@ -2,7 +2,7 @@
 
 namespace PeeQL\Schema;
 
-class GetUsersSchema extends ASchema {
+class GetUsersSchema extends AQuerySchema {
     protected function define() {
         $this->addMultipleColumns([
             'userId',
