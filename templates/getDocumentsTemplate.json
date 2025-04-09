@@ -1,0 +1,20 @@
+{
+    "operation": "query",
+    "name": "getDocuments",
+    "description": "This query returns all documents ordered by date created desc",
+    "definition": {
+        "documents": {
+            "get": {
+                "cols": [
+                    "documentId",
+                    "title",
+                    "description",
+                    "dateCreated"
+                ],
+                "orderBy": {
+                    "dateCreated": "DESC"
+                }
+            }
+        }
+    }
+}

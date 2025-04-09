@@ -1,0 +1,24 @@
+{
+    "operation": "query",
+    "name": "getUsers",
+    "description": "This query returns a user with username admin",
+    "definition": {
+        "users": {
+            "get": {
+                "cols": [
+                    "userId",
+                    "username",
+                    "fullname",
+                    "dateCreated"
+                ],
+                "conditions": [
+                    {
+                        "col": "username",
+                        "value": "admin",
+                        "type": "eq"
+                    }
+                ]
+            }
+        }
+    }
+}
