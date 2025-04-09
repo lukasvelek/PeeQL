@@ -2,6 +2,7 @@
 
 namespace PeeQL;
 
+use PeeQL\Parser\PeeQLParser;
 use PeeQL\Router\PeeQLRouter;
 
 /**
@@ -11,11 +12,14 @@ use PeeQL\Router\PeeQLRouter;
  */
 class PeeQL {
     private ?PeeQLRouter $router;
+    private PeeQLParser $parser;
 
     /**
      * Class constructor
      */
     public function __construct() {
+        $this->parser = new PeeQLParser();
+
         $this->router = null;
     }
 
@@ -33,12 +37,12 @@ class PeeQL {
     }
 
     /**
-     * Processes the given JSON $json query and returns the result
+     * Processes the given JSON $json query, executes it and returns the result
      * 
      * @param string $json JSON query
      */
-    public function query(string $json): mixed {
-        return null;
+    public function execute(string $json): mixed {
+        return $this->parser->parse($this->router, $json);
     }
 }
 

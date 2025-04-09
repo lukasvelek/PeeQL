@@ -1,9 +1,9 @@
 # PeeQL
-PeeQL stands for PHP (or PeeHP) Query Language. It allows converting and mapping JSON queries to PHP classes for database querying.
+PeeQL (pronounced as 'pickle') stands for PHP (or PeeHP) Query Language. It allows converting and mapping JSON queries to PHP classes for database querying.
 
 This project took inspiration from GraphQL but it is rather more basic.
 
-This project is currently work in progress.
+This project is currently work in progress as well as this document.
 
 ## How does it work?
 You import PeeQL to your project and initialize an instance of PeeQL (see `src/PeeQL.php`). From there you obtain a router and define routes to your repositories, models or other database operations handlers.
