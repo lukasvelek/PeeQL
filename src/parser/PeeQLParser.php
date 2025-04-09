@@ -4,6 +4,7 @@ namespace PeeQL\Parser;
 
 use Exception;
 use PeeQL\Operations\QueryOperation;
+use PeeQL\Result\AResult;
 use PeeQL\Router\PeeQLRouter;
 use PeeQL\Schema\PeeQLSchema;
 
@@ -54,7 +55,13 @@ class PeeQLParser {
 
             $method = $operation->getHandlerMethodName();
 
-            return $handler->$method($operation);
+            $result = $handler->$method($operation);
+
+            if(!($result instanceof AResult)) {
+                throw new Exception('Handler returned value that is not a descendant of AResult.', 9999);
+            }
+
+            return $result->getResult();
         } catch(Exception $e) {
             throw new Exception('Could not parse given JSON query.', 9999, $e);
         }
