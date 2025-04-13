@@ -10,3 +10,4 @@
 - Added router
 - Added query templates
 - Added support for basic schema definition
+- Added interface for a wrapper class
