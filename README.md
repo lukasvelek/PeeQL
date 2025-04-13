@@ -142,3 +142,51 @@ This is a list of future plans:
 - Aggregation
     - result count
 - Schema browser
+
+## Setup
+As this is a PHP library you need to implement it into your PHP project. Auto-loading the library files will not be covered in this setup.
+
+__To-do list:__
+1. First you need to put the PeeQL library files to your project.
+2. Then you should create a wrapper class around the main `PeeQL\PeeQL` class. In this setup the wrapper class will be called `PeeQLWrapper`.
+    - You may ask why should you create a wrapper class?
+        - The answer is easy, it is better to have a wrapper class that will also contain schema definition and routing definition.
+    - The wrapper must implement the `PeeQL\IPeeQLWrapperClass` interface.
+3. The `PeeQLWrapper` class then should be instantiated.
+4. Then you can put JSON queries to the `PeeQLWrapper::execute()` method.
+5. The result will be returned in JSON.
+
+### Route definition
+Routes in PeeQL are links to the query-handling objects. These can be repositories, models, managers or anything else that works with any data.
+
+Routes in PeeQL are defined using `PeeQL\Router\PeeQLRouter` class. This class has two methods for defining routes:
+1. `PeeQL\Router\PeeQLRouter::addObjectRoute(string $name, object $object)`
+    - $name is the handler name
+        - In the JSON query the first attribute right after `definition` is the handler name
+            - It is capitalized - "documents" -> "Documents"
+    - $object is the handler object itself
+2. `PeeQL\Router\PeeQLRouter::addRoute(string $name, string $className, array $params = [])`
+    - $name is the handler name
+        - In the JSON query the first attribute right after `definition` is the handler name
+            - It is capitalized - "documents" -> "Documents"
+    - $className is the name of the handler class -> retrieved by defining the class name and suffix `::class`
+    - $params is an array of parameters that will be passed to $className when being instantiated
+
+So, you can either pass the handler object itself or just its name and constructor parameters.
+
+The handler class must have a handling method that is the first attribute in the JSON query after the handler name.
+
+### Schema definition
+Schemas in PeeQL are definitions of which columns can be used for retrieving data, filtering, sorting, etc.
+
+Schemas in PeeQL are defined using `PeeQL\Schema\PeeQLSchema` class. This class has two methods for defining routes:
+1. `PeeQL\Schema\PeeQLSchema::addObjectSchema(string $name, ASchema $schema)`
+    - $name is the schema name
+        - As of `PeeQL v1.0` schema names are composed by the handler name (the first attribute after `definition` in the JSON query) and the handler method name (the first attribute after the handler name)
+    - $schema is the schema class
+        - The schema class must extend the `PeeQL\Schema\ASchema` abstract class
+2. `PeeQL\Schema\PeeQLSchema::addSchema(string $className, ?string $name = null)`
+    - $className is the schema class name
+        - No parameters are required
+    - $name is the schema name
+        - As of `PeeQL v1.0` schema names are composed by the handler name (the first attribute after `definition` in the JSON query) and the handler method name (the first attribute after the handler name)
