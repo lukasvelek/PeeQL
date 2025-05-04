@@ -180,11 +180,11 @@ The handler class must have a handling method that is the first attribute in the
 Schemas in PeeQL are definitions of which columns can be used for retrieving data, filtering, sorting, etc.
 
 Schemas in PeeQL are defined using `PeeQL\Schema\PeeQLSchema` class. This class has two methods for defining routes:
-1. `PeeQL\Schema\PeeQLSchema::addObjectSchema(string $name, ASchema $schema)`
+1. `PeeQL\Schema\PeeQLSchema::addObjectSchema(string $name, ACommonSchema $schema)`
     - $name is the schema name
         - As of `PeeQL v1.0` schema names are composed by the handler name (the first attribute after `definition` in the JSON query) and the handler method name (the first attribute after the handler name)
     - $schema is the schema class
-        - The schema class must extend the `PeeQL\Schema\ASchema` abstract class
+        - The schema class must extend the `PeeQL\Schema\ACommonSchema` abstract class
 2. `PeeQL\Schema\PeeQLSchema::addSchema(string $className, ?string $name = null)`
     - $className is the schema class name
         - No parameters are required
